@@ -66,7 +66,7 @@ Reboot once after editing for changes to take effect.
 ---
 
 ## 🔍 How It Works
-
+ 
 ```
 Charger connected
         ↓
