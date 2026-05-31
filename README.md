@@ -11,6 +11,7 @@ A lightweight Magisk module that automatically limits battery charging between c
 - ⚡ **Action button** — reload config instantly without reboot
 - 🖥️ Automatically **bypasses charging control** during USB file transfer, MTP, PTP, or USB tethering
 - 🔌 Handles **power cuts and charger reconnects** gracefully
+- 🔁 Supports **Magisk in-app updates**
 - 📝 Simple **config file** — no app required
 - 🪶 Zero UI, zero bloat — pure shell script
 
@@ -81,7 +82,12 @@ No reboot required after config changes.
 ## 🔍 How It Works
 
 ```
+Boot
+    → service.sh starts automatically via Magisk
+
 Charger connected
+        ↓
+Fresh connection? → Reset input_suspend = 0 (charging enabled)
         ↓
 Is USB data / tethering active?
     YES → Skip control, charging continues normally
@@ -137,18 +143,23 @@ cat /sys/class/power_supply/battery/input_suspend
 
 ## 📜 Changelog
 
+**v3.1** — Bug Fix
+- Fixed critical bug: charging not starting when charger reconnected at 85–95% range
+- Improved Action button status — shows IDLE when charger is disconnected
+- Added Magisk in-app update support
+
 **v3.0**
-- Added Action button support for instant config reload without reboot
+- Added Action button for instant config reload without reboot
 - Added config validation with error messages
 - Added real-time status display in Action output
 
 **v2.0**
-- Added configurable STOP and START values via config.sh
-- Added USB data connection detection (MTP, PTP, tethering bypass)
+- Added configurable STOP and START via config.sh
+- Added USB data connection detection bypass
 - Added charger disconnect safety reset
 
 **v1.0**
-- Initial release with fixed 95/85% charging limits
+- Initial release
 
 ---
 

@@ -51,7 +51,14 @@ online=$(cat /sys/class/power_supply/charger/online)
 usb_state=$(cat /sys/class/android_usb/android0/state)
 
 echo "Battery  : $level%"
-echo "Charger  : $([ "$online" = "1" ] && echo "Connected" || echo "Disconnected")"
-echo "USB Mode : $usb_state"
-echo "Status   : $([ "$suspend" = "1" ] && echo "PAUSED" || echo "CHARGING")"
+
+if [ "$online" = "1" ]; then
+    echo "Charger  : Connected"
+    echo "USB Mode : $usb_state"
+    [ "$suspend" = "1" ] && echo "Status   : PAUSED" || echo "Status   : CHARGING"
+else
+    echo "Charger  : Disconnected"
+    echo "Status   : IDLE"
+fi
+
 echo "================================================"

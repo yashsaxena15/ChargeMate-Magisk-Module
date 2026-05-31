@@ -31,6 +31,7 @@ if [ "$START" -ge "$STOP" ] || [ "$((STOP - START))" -lt 5 ]; then
 fi
 
 STATE=""
+LAST_ONLINE="0"
 
 while true; do
     level=$(cat /sys/class/power_supply/battery/capacity)
@@ -39,10 +40,17 @@ while true; do
 
     if [ "$online" = "1" ]; then
 
+        # Fresh charger connection detected — explicitly enable charging
+        if [ "$LAST_ONLINE" = "0" ]; then
+            echo 0 > /sys/class/power_supply/battery/input_suspend
+            STATE="RUNNING"
+        fi
+
         # USB data connection active — skip charging control
         if [ "$usb_state" = "CONFIGURED" ]; then
             echo 0 > /sys/class/power_supply/battery/input_suspend
             STATE=""
+            LAST_ONLINE="1"
             sleep 30
             continue
         fi
@@ -65,5 +73,6 @@ while true; do
         STATE=""
     fi
 
+    LAST_ONLINE="$online"
     sleep 30
 done

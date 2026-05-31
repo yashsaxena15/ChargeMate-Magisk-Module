@@ -1,6 +1,7 @@
 id=chargemate
 name=ChargeMate
-version=v3.0
-versionCode=3
+version=v3.1
+versionCode=31
 author=Yash
 description=Limits battery charging between configurable % levels. Edit config.sh to set STOP and START values. Use Action button to reload config instantly without reboot.
+updateJson=https://raw.githubusercontent.com/yashsaxena15/ChargeMate-Magisk-Module/main/update.json
