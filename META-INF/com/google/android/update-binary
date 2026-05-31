@@ -1,7 +1,21 @@
 #!/sbin/sh
 SKIPUNZIP=1
+
+# Extract all module files
 unzip -o "$ZIPFILE" 'module.prop' -d "$MODPATH" >&2
 unzip -o "$ZIPFILE" 'service.sh' -d "$MODPATH" >&2
 unzip -o "$ZIPFILE" 'config.sh' -d "$MODPATH" >&2
+unzip -o "$ZIPFILE" 'action.sh' -d "$MODPATH" >&2
+
+# Set correct permissions
 set_perm "$MODPATH/service.sh" root root 0755
+set_perm "$MODPATH/action.sh" root root 0755
 set_perm "$MODPATH/config.sh" root root 0644
+
+ui_print "-----------------------------------"
+ui_print "   ChargeMate v3.0 by Yash"
+ui_print "-----------------------------------"
+ui_print "- Charging limit: 85% - 95%"
+ui_print "- Edit config.sh to change limits"
+ui_print "- Use Action button to reload"
+ui_print "-----------------------------------"

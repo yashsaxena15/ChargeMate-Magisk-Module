@@ -1,6 +1,6 @@
 # 🔋 ChargeMate — Magisk Module
 
-A lightweight Magisk module that automatically limits battery charging between configurable percentage levels, designed to extend long-term battery health.
+A lightweight Magisk module that automatically limits battery charging between configurable percentage levels, designed to extend long-term battery health. Supports instant config reload via the Action button — no reboot required.
 
 ---
 
@@ -8,8 +8,9 @@ A lightweight Magisk module that automatically limits battery charging between c
 
 - 🔋 Stops charging at a configurable **STOP%** (default: 95%)
 - 🔄 Resumes charging at a configurable **START%** (default: 85%)
+- ⚡ **Action button** — reload config instantly without reboot
 - 🖥️ Automatically **bypasses charging control** during USB file transfer, MTP, PTP, or USB tethering
-- ⚡ Handles **power cuts and charger reconnects** gracefully
+- 🔌 Handles **power cuts and charger reconnects** gracefully
 - 📝 Simple **config file** — no app required
 - 🪶 Zero UI, zero bloat — pure shell script
 
@@ -53,7 +54,7 @@ STOP=95
 START=85
 ```
 
-Reboot once after editing for changes to take effect.
+After editing, tap the **Action button** in Magisk to apply changes instantly — no reboot needed.
 
 ### Recommended Values
 
@@ -65,8 +66,20 @@ Reboot once after editing for changes to take effect.
 
 ---
 
+## ▶️ Action Button
+
+Tap the **Action** button in Magisk → Modules → ChargeMate to:
+
+- Reload `config.sh` values instantly
+- Restart the background service with new limits
+- View current battery status, charger state, and active config
+
+No reboot required after config changes.
+
+---
+
 ## 🔍 How It Works
- 
+
 ```
 Charger connected
         ↓
@@ -90,6 +103,7 @@ chargemate/
 ├── module.prop          # Module metadata
 ├── service.sh           # Background service (auto-starts on boot)
 ├── config.sh            # User configuration — edit this file
+├── action.sh            # Action button script (instant config reload)
 └── META-INF/
     └── com/google/android/
         ├── update-binary
@@ -110,7 +124,7 @@ Yes. The module monitors the USB state. Whenever a data connection is detected (
 
 **Q: Do I need to reboot after editing config.sh?**
 
-Yes. The service loads the config once at boot.
+No. Just tap the **Action button** in Magisk to reload the config instantly.
 
 **Q: How do I verify the script is running?**
 
@@ -118,6 +132,23 @@ Yes. The service loads the config once at boot.
 cat /sys/class/power_supply/battery/input_suspend
 # Output: 1 = charging paused | 0 = charging active
 ```
+
+---
+
+## 📜 Changelog
+
+**v3.0**
+- Added Action button support for instant config reload without reboot
+- Added config validation with error messages
+- Added real-time status display in Action output
+
+**v2.0**
+- Added configurable STOP and START values via config.sh
+- Added USB data connection detection (MTP, PTP, tethering bypass)
+- Added charger disconnect safety reset
+
+**v1.0**
+- Initial release with fixed 95/85% charging limits
 
 ---
 
